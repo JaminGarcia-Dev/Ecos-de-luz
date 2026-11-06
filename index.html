@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="color-scheme" content="dark">
+    <title>Ecos de Luz — Beta</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+    <div id="practicaInfo" class="oculto" aria-live="polite"></div>
+    <div id="juego"></div>
+
+    <!-- HUD -->
+    <div id="hud" class="oculto">
+        <div id="estado">
+            <div id="medallon">
+                <div id="anilloXP"></div>
+                <div id="medInt"><span id="kj" data-ico="luz"></span><b id="nivelNum">1</b></div>
+            </div>
+            <div id="barras">
+                <div class="barra vida" id="barraVida">
+                    <div class="rastro" id="rastroVida"></div>
+                    <div class="fill" id="fillVida"></div><span id="txtVida"></span></div>
+                <div class="barra luz" id="barraLuz">
+                    <div class="fill" id="fillLuz"></div><span id="txtLuz"></span></div>
+                <div id="filaExtra"><div id="llamas" title="Llamas"><span data-ico="llama"></span><span data-ico="llama"></span><span data-ico="llama"></span></div>
+                <div id="motas" title="Luz rescatada"><span data-ico="mota"></span><b id="motasNum">0</b><i id="motasMas"></i></div></div>
+            </div>
+        </div>
+        <canvas id="brujula" width="520" height="40"></canvas>
+        <div id="mapaWrap"><canvas id="minimapa" width="220" height="220"></canvas>
+            <div id="mapaNorte">N</div>
+            <div id="mapaRegion"></div>
+        </div>
+        <div id="misPanel">
+            <div id="misTit"></div>
+            <div id="misPaso"></div>
+            <div id="misDif"></div>
+        </div>
+        <div id="bestia" class="oculto">
+            <div id="bestiaNom"></div>
+            <div class="barraB">
+                <div id="bestiaFill"></div>
+            </div>
+            <div class="barraB" id="bestiaEqB">
+                <div id="bestiaEq"></div>
+            </div>
+        </div>
+        <div id="timerWrap" class="oculto">
+            <div id="timerTxt"></div>
+            <div class="barraB">
+                <div id="timerFill"></div>
+            </div>
+        </div>
+        <div id="avisos"></div>
+        <div id="prompt" class="oculto"><kbd class="k-tec">E</kbd><kbd class="k-pad">Y</kbd><span id="promptTxt"></span><i id="promptProg"></i></div>
+        <div id="mira" class="oculto"></div>
+        <div id="pista" class="oculto"></div>
+        <div id="habil">
+            <div class="hab" id="habEsq"><kbd class="k-tec">V</kbd><kbd class="k-pad">B</kbd><i data-ico="esquiva"></i><small>Esquiva</small></div>
+            <div class="hab" id="habPulso"><kbd class="k-tec">Q</kbd><kbd class="k-pad">LB</kbd><i data-ico="pulso"></i><small>Pulso</small></div>
+            <div class="hab" id="habGuardia"><kbd class="k-tec">R</kbd><kbd class="k-pad">RB</kbd><i data-ico="escudo"></i><small>Guardia</small></div>
+            <div class="hab" id="habLumi"><kbd class="k-tec">F</kbd><kbd class="k-pad" data-ico="botonVista" title="Mantén Vista"></kbd><i data-ico="lumi"></i><small>Lumi</small></div>
+        </div>
+        <div id="hotbar"></div>
+        <div id="fps" class="oculto"></div>
+        <div id="coord"></div>
+    </div>
+    <div id="vineta"></div>
+    <div id="banner">
+        <div id="banKj"></div>
+        <div id="banTit"></div>
+        <div id="banSub"></div>
+    </div>
+    <div id="diarioCard" class="oculto">
+        <div id="diarioTit"></div>
+        <div id="diarioTxt"></div>
+    </div>
+    <div id="dialogo" class="oculto">
+        <div id="dlgNom"></div>
+        <div id="dlgTxt"></div>
+        <div id="dlgSig">E ▸</div>
+        <div id="dlgOpciones"></div>
+        <div id="dlgControles" class="oculto">
+            <button id="dlgRepetir" class="mini">Repetir línea</button>
+            <button id="dlgSiguiente" class="mini">Continuar</button>
+            <button id="dlgSaltar" class="mini">Saltar conversación</button>
+        </div>
+    </div>
+    <div id="cineTop" class="cine"></div>
+    <div id="cineBot" class="cine"></div>
+    <div id="subtitulo"></div>
+    <div id="tituloCine">
+        <div id="tcKj" data-ico="luz"></div>
+        <div id="tcNom">ECOS DE LUZ</div>
+        <div id="tcSub"></div>
+    </div>
+    <div id="saltar" class="oculto">Mantén <kbd class="k-tec">Espacio</kbd><kbd class="k-pad">A</kbd> para saltar la escena</div>
+    <div id="cineControles" class="oculto"><button id="cinePausa" class="mini">Pausar</button><button id="cineRepetir" class="mini">Repetir plano</button><button id="cineAvanzar" class="mini">Avanzar</button></div>
+    <div id="creditos" class="oculto"></div>
+    <div id="bordeCaz"><i class="izq"></i><i class="der"></i><i class="arr"></i><i class="aba"></i></div>
+    <canvas id="grietas"></canvas>
+    <div id="destello"></div>
+    <div id="fundido"></div>
+
+    <!-- Portada -->
+    <div id="portada" class="oculto">
+        <div id="portadaFondo"></div>
+        <div class="prayos"></div>
+        <canvas id="portadaLuz"></canvas>
+        <div class="pcont">
+            <svg class="emblema" viewBox="0 0 120 120" aria-hidden="true"><circle class="e-rayos" cx="60" cy="60" r="58.5"/><circle class="e-anillo" cx="60" cy="60" r="53"/><circle class="e-anillo fino" cx="60" cy="60" r="47"/><path class="e-faro" d="M30 96H90M38 96V90H82V96M44 90V80M76 90V80M28 80Q60 71 92 80M48 80V68M72 80V68M34 68Q60 60 86 68M51 68V57M69 68V57M40 57Q60 50 80 57M54 57V47M66 57V47M46 47Q60 41 74 47M60 44V24M56 33H64M57 29H63M58 25.5H62"/><circle class="e-joya" cx="60" cy="20" r="2.6"/></svg>
+            <h1 class="ptitulo">ECOS DE LUZ</h1>
+            <div class="psub">Un valle bajo la luna roja</div>
+            <div class="psep"><i></i></div>
+            <nav class="pbtns">
+                <button id="btnContinuar" class="pbtn" style="--k:0"><i data-ico="lumi"></i><span>Continuar</span><small id="pInfo"></small></button>
+                <button id="btnNueva" class="pbtn principal" style="--k:1"><i data-ico="brote"></i><span>Nueva partida</span></button>
+                <button id="btnPractica" class="pbtn" style="--k:2"><i data-ico="espada"></i><span>Práctica de combate</span></button>
+                <button id="btnControles" class="pbtn" style="--k:2"><i data-ico="mando"></i><span>Controles</span></button>
+                <button id="btnAjustes" class="pbtn" style="--k:3"><i data-ico="ajustes"></i><span>Ajustes</span></button>
+            </nav>
+            <div id="sugCalidad" class="psug oculto"><span id="sugTxt"></span><button id="btnSugSi" class="btn"></button><button id="btnSugNo" class="btn">Seguir así</button></div>
+        </div>
+        <div class="ppie"><span>Explora, encuentra refugio y descubre qué ocurrió en el faro.</span><span class="pmando"><i data-ico="mando"></i> Teclado y ratón o mando</span></div>
+    </div>
+    <div id="cargando" class="oculto">
+        <div class="cc">
+            <svg class="emblema carga" viewBox="0 0 120 120" aria-hidden="true"><circle class="e-rayos" cx="60" cy="60" r="58.5"/><circle class="e-anillo" cx="60" cy="60" r="53"/><circle class="e-anillo fino" cx="60" cy="60" r="47"/><path class="e-faro" d="M30 96H90M38 96V90H82V96M44 90V80M76 90V80M28 80Q60 71 92 80M48 80V68M72 80V68M34 68Q60 60 86 68M51 68V57M69 68V57M40 57Q60 50 80 57M54 57V47M66 57V47M46 47Q60 41 74 47M60 44V24M56 33H64M57 29H63M58 25.5H62"/><circle class="e-joya" cx="60" cy="20" r="2.6"/></svg>
+            <div class="ctit">ECOS DE LUZ</div>
+            <div id="txtCarga">Despertando el valle…</div>
+            <div class="barraC">
+                <div id="barraCarga"></div>
+            </div>
+            <div id="consejoCarga"></div>
+        </div>
+    </div>
+
+    <!-- Pausa -->
+    <div id="pausa" class="oculto">
+        <div class="pbox">
+            <div class="ptabs" id="ptabs"></div>
+            <div class="pcontenido" id="pcontenido"></div>
+            <div class="pfooter"><span><span class="k-tec">Esc / P · continuar</span><span class="k-pad">B o <i data-ico="botonMenu"></i> Menú · continuar · LB / RB · pestañas</span></span><span><button class="btn pq" id="btnVolver">Volver</button> <button class="btn pq" id="btnSalir">Guardar y salir al menú</button></span></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/00-nucleo.js"></script>
+    <script src="js/76-diagnostico.js"></script>
+    <script src="js/01-audio.js"></script>
+    <script src="js/02-terreno.js"></script>
+    <script src="js/03-flora.js"></script>
+    <script src="js/04-estructuras.js"></script>
+    <script src="js/05-personaje.js"></script>
+    <script src="js/06-fauna.js"></script>
+    <script src="js/49-campana.js"></script>
+    <script src="js/50-guion-inicio.js"></script>
+    <script src="js/59-guion-capitulos.js"></script>
+    <script src="js/68-secundarias.js"></script>
+    <script src="js/57-progresion-enemiga.js"></script>
+    <script src="js/07-sistemas.js"></script>
+    <script src="js/08-interfaz.js"></script>
+    <script src="js/09-cinematica.js"></script>
+    <script src="js/10-juego.js"></script>
+    <script src="js/11-jefes.js"></script>
+    <script src="js/12-mando.js"></script>
+    <script src="js/13-render.js"></script>
+    <script src="js/14-atmosfera.js"></script>
+    <script src="js/15-texturas.js"></script>
+    <script src="js/16-plantas.js"></script>
+    <script src="js/47-hikari-modelo.js"></script>
+    <script src="js/17-hikari.js"></script>
+    <script src="js/18-movimiento.js"></script>
+    <script src="js/19-animales.js"></script>
+    <script src="js/20-armas.js"></script>
+    <script src="js/21-combate.js"></script>
+    <script src="js/22-golems.js"></script>
+    <script src="js/23-ataques-golem.js"></script>
+    <script src="js/24-arquitectura.js"></script>
+    <script src="js/25-gente.js"></script>
+    <script src="js/26-guion.js"></script>
+    <script src="js/27-ecos.js"></script>
+    <script src="js/28-iconos.js"></script>
+    <script src="js/29-portada.js"></script>
+    <script src="js/30-agua.js"></script>
+    <script src="js/31-arenas.js"></script>
+    <script src="js/32-cuevas.js"></script>
+    <script src="js/33-santuarios.js"></script>
+    <script src="js/34-piezas.js"></script>
+    <script src="js/69-director-combate.js"></script>
+    <script src="js/35-sombras.js"></script>
+    <script src="js/75-variantes-sombra.js"></script>
+    <script src="js/48-tasogare-modelo.js"></script>
+    <script src="js/36-tasogare.js"></script>
+    <script src="js/37-asedio.js"></script>
+    <script src="js/38-cazadores.js"></script>
+    <script src="js/39-escenas.js"></script>
+    <script src="js/42-duelo.js"></script>
+    <script src="js/43-duelo-espiral.js"></script>
+    <script src="js/45-audio-recursos.js"></script>
+    <script src="js/46-paisaje-sonoro.js"></script>
+    <script src="js/54-musica-inicio.js"></script>
+    <script src="js/51-piloto.js"></script>
+    <script src="js/73-hilo-luz.js"></script>
+    <script src="js/52-escenas-inicio.js"></script>
+    <script src="js/53-patio-inicio.js"></script>
+    <script src="js/58-practica.js"></script>
+    <script src="js/62-isla-yoake.js"></script>
+    <script src="js/61-escenario-capitulos.js"></script>
+    <script src="js/63-escenas-capitulos.js"></script>
+    <script src="js/64-luna-roja.js"></script>
+    <script src="js/65-luna-dorada.js"></script>
+    <script src="js/66-lumi-enlaces.js"></script>
+    <script src="js/67-duelo-luna.js"></script>
+    <script src="js/70-impacto.js"></script>
+    <script src="js/71-arco-luz.js"></script>
+    <script src="js/72-escuela-luz.js"></script>
+    <script src="js/74-escuelas-magia.js"></script>
+    <script src="js/60-capitulos.js"></script>
+</body>
+
+</html>

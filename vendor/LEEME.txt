@@ -1,0 +1,4 @@
+USO SIN INTERNET (opcional)
+1. Descarga three.min.js r128 (https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js) y cópialo aquí como vendor/three.min.js.
+2. En index.html cambia la URL de ese <script> por "vendor/three.min.js". No hace falta nada más: el posprocesado, el cielo y las texturas los genera el propio juego.
+3. Las fuentes de Google son opcionales: sin ellas se usan fuentes del sistema.
