@@ -1,0 +1,16 @@
+# Dependencias de las herramientas (npm install en herramientas/)
+node_modules/
+
+# Paquetes generados por herramientas/empaquetar.mjs
+dist/
+
+# Salidas de las pruebas y capturas
+herramientas/salida*/
+*.tmp
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+desktop.ini
+*.blend1
+.claude/settings.local.json

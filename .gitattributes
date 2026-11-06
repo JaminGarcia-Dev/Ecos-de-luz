@@ -1,0 +1,16 @@
+# Texto con fin de línea LF en todos los sistemas
+* text=auto eol=lf
+
+# Binarios
+*.ogg    binary
+*.mp3    binary
+*.wav    binary
+*.png    binary
+*.jpg    binary
+*.glb    binary
+*.blend  binary
+
+# Generados: no se comparan línea a línea
+js/45-audio-recursos.js  linguist-generated -diff
+modelos/**/*.gltf        linguist-generated -diff
+modelos/**/visor-autonomo.html linguist-generated -diff

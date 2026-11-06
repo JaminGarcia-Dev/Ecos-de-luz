@@ -1,0 +1,19 @@
+{
+  "liveServer.settings.ignoreFiles": [
+    "**/.vscode/**",
+    "**/herramientas/**",
+    "**/dist/**",
+    "**/docs/**",
+    "**/audio/**",
+    "**/modelos/**",
+    "**/vendor/**",
+    "**/css/**",
+    "**/js/**",
+    "**/*.md",
+    "**/*.png",
+    "**/*.jpg",
+    "**/*.json",
+    "**/*.mjs",
+    "**/*.txt"
+  ]
+}
