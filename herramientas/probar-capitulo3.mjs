@@ -1,0 +1,75 @@
+// Capítulo 3 (Duna) de punta a punta: archivo, estela, glifos, gólem, orbes, recuerdo y paso al capítulo 4.
+import { chromium } from 'playwright-core';
+import fs from 'node:fs';
+import http from 'node:http';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const raiz = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const arg = (k, d) => { const i = process.argv.indexOf('--' + k); return i < 0 ? d : process.argv[i + 1]; };
+const archivo = arg('archivo', 'index.html'), salida = path.resolve(raiz, arg('salida', (process.env.TEMP || '/tmp') + '/ecos-pruebas/salida-capitulo3'));
+fs.mkdirSync(salida, { recursive: true });
+const srv = http.createServer((q, r) => { const f = path.resolve(raiz, '.' + decodeURIComponent(q.url.split('?')[0])); if (!f.startsWith(raiz + path.sep) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { r.writeHead(404); return r.end(); } r.setHeader('Content-Type', f.endsWith('.js') ? 'text/javascript' : f.endsWith('.css') ? 'text/css' : 'text/html'); fs.createReadStream(f).pipe(r); }).listen(0);
+await new Promise(r => srv.once('listening', r));
+const nav = await chromium.launch({ executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', headless: true, args: ['--use-angle=d3d11', '--ignore-gpu-blocklist'] });
+const p = await nav.newPage({ viewport: { width: 1600, height: 900 } }), errores = [], pruebas = [];
+await p.addInitScript(() => localStorage.setItem('ecos2_ajustes', JSON.stringify({ calidad: 'alta', maestro: 0 })));
+await p.route('**/favicon.ico', r => r.fulfill({ status: 204 })); p.on('pageerror', e => errores.push(e.message)); p.on('console', m => { if (m.type() === 'error') errores.push(m.text()); });
+const url = `http://localhost:${srv.address().port}/${archivo}`;
+const comprobar = (nombre, pasa, evidencia) => { pruebas.push({ nombre, pasa: !!pasa, evidencia }); if (!pasa) throw Error(nombre + ': ' + JSON.stringify(evidencia)); };
+const cargar = async () => { await p.goto(url, { timeout: 180000 }); await p.waitForFunction(() => window.__ecos && G.estado === 'portada', null, { timeout: 120000 }); await p.evaluate(() => __ecos.manual(true)); };
+const sim = n => p.evaluate(n => __ecos.sim(n, 1 / 60), n);
+const foto = async nombre => { await p.evaluate(() => render()); await p.waitForTimeout(500); await p.screenshot({ path: path.join(salida, nombre + '.png') }); };
+const paso = () => p.evaluate(() => { const m = Sis.ST.mis.c3_duna; return m ? (m.e === 'hecha' ? 99 : m.p) : -1; });
+const ofrece = () => p.evaluate(() => { const o = mejorInteract(J); return o && o.txt; });
+const usar = () => p.evaluate(() => { const o = mejorInteract(J); if (o) o.fn(); return o && o.txt; });
+const cerrarDialogo = async () => { await sim(2); await p.evaluate(() => { if (UI.dlg) UI.saltarDialogo(); }); await sim(2); };
+const ir = async (x, z) => { await p.evaluate(([x, z]) => { __ecos.tele(x, z); J.vx = J.vz = 0; }, [x, z]); await sim(20); };
+const junto = async (fn, a) => { const [x, z] = await p.evaluate(fn, a); await ir(x, z); };
+try {
+  await cargar();
+  await p.evaluate(() => {
+    __ecos.empezarRapido(true); const s = Sis.ST.inicio;
+    Object.assign(s, { prologo: true, nombre: true, hinode: true, momo: true, tsuru: true, hoja: true, rumbo: true, fin: true, registroPetalo: true, postigo: true });
+    Sis.ST.mis = { inicio_luna: { e: 'hecha', p: 6, c: 0 }, registro_petalo: { e: 'hecha', p: 1, c: 0 }, c1_petalo: { e: 'hecha', p: 10, c: 0 }, c2_marea: { e: 'hecha', p: 12, c: 0 } };
+    Sis.ST.capitulo = 3; Sis.ST.frag[0] = Sis.ST.frag[2] = true; Object.assign(Sis.ST.retos, { petalo: true, marea: true }); Sis.dar('katana', 1, true); Sis.ST.eq.arma = 'katana';
+    Sis.ST.onis = { petalo: 1, marea: 1, duna: 1 }; Sis.ST.inicio.cap = { emisor: true }; Sis.ST.seg = null; Sis.guardar();
+  });
+  await cargar(); await p.locator('#btnContinuar').click(); await p.waitForFunction(() => G.estado === 'juego', null, { timeout: 30000 }); await sim(2);
+  comprobar('El capítulo 3 abre Duna y revela su misión', await p.evaluate(() => Campana.abierta(3) && Sis.ST.mis.c3_duna && Sis.ST.mis.c3_duna.e === 'activa'));
+  await junto(() => { const a = EscenarioCapitulos.puntos.archivo; return [a.x, a.z + 1.4]; }); await sim(10);
+  comprobar('Al llegar al oasis Hikari ordena sus copias', await p.evaluate(() => UI.dlg && UI.dlg.lineas[0].id === 'CDO01')); await cerrarDialogo(); await foto('01-archivo');
+  comprobar('El atril ofrece consultar el archivo', /Consultar el archivo/.test(await ofrece()), await ofrece());
+  await usar(); comprobar('El archivo nombra a la Luna Dorada', await p.evaluate(() => UI.dlg && UI.dlg.lineas[0].id === 'CDA01' && UI.dlg.lineas.some(l => l.id === 'CDA13'))); await cerrarDialogo();
+  comprobar('Consultar el archivo avanza y Lumi decide seguir informando', await paso() === 1 && await p.evaluate(() => Sis.ST.inicio.cap.lumiInforma === true), await paso());
+  await junto(() => { const e = EscenarioCapitulos.puntos.estela; return [e.x, e.z + 1.6]; }); await foto('02-estela');
+  comprobar('La estela ofrece examinar el esquema', /estela/.test(await ofrece()), await ofrece());
+  await usar(); await cerrarDialogo(); comprobar('Examinar la estela lleva a los glifos', await paso() === 2, await paso());
+  await p.evaluate(() => Sis.dar('glifo', 3, true)); await sim(5); comprobar('Tres glifos llevan a las columnas', await paso() === 3, await paso());
+  for (const e of ['pelea', 'purificado', 'canal']) await p.evaluate(e => Sis.evento('jefe:arena:' + e), e);
+  comprobar('Los eventos del gólem llevan a los orbes', await paso() === 6, await paso());
+  await junto(() => [Estr.altar.duna.x + 1.5, Estr.altar.duna.z + 1.5]); await p.evaluate(() => { J.y = sueloEnJ(J.x, Estr.altar.duna.y + 1, J.z); }); await sim(5); await cerrarDialogo();
+  comprobar('El altar ofrece despertar el recorrido', /Despertar el altar/.test(await ofrece()), await ofrece());
+  await usar(); await sim(5);
+  const orbes = await p.evaluate(() => Sis.RETO.duna.act && Sis.RETO.duna.orbes.length);
+  comprobar('Se encienden seis orbes con su tiempo', orbes === 6, orbes);
+  await p.evaluate(() => { for (const o of Sis.RETO.duna.orbes) { __ecos.tele(o.x, o.z); J.y = o.y; __ecos.sim(3, 1 / 60); } });
+  await sim(5);
+  comprobar('Seis orbes dejan el fragmento sin concederlo', await paso() === 7 && await p.evaluate(() => Sis.ST.retos.duna && !Sis.ST.frag[1]), await paso());
+  await junto(() => [Estr.altar.duna.x + 1.5, Estr.altar.duna.z + 1.5]); await p.evaluate(() => { J.y = sueloEnJ(J.x, Estr.altar.duna.y + 1, J.z); }); await sim(5); await cerrarDialogo();
+  comprobar('El altar ofrece tocar el fragmento', /Tocar el fragmento/.test(await ofrece()), await ofrece());
+  await usar(); await p.waitForFunction(() => Cin.activa && Cin.tipo === 'recuerdo', null, { timeout: 60000 }); await sim(60 * 24);
+  comprobar('El recuerdo integra la Arena y Hikari lo cuenta', await p.evaluate(() => !Cin.activa && Sis.ST.frag[1] && UI.dlg && UI.dlg.lineas[0].id === 'CDR01'));
+  await cerrarDialogo(); comprobar('Integrar la Arena lleva a Tsuru', await paso() === 8, await paso());
+  await junto(() => [PatioInicio.puntos.tsuru.x + 1.5, PatioInicio.puntos.tsuru.z + 1.5]);
+  comprobar('Tsuru ofrece la conversación', /Contar a Tsuru/.test(await ofrece()), await ofrece());
+  await usar(); await cerrarDialogo(); await sim(5);
+  comprobar('El capítulo 3 termina y abre el 4', await paso() === 99 && await p.evaluate(() => Sis.ST.capitulo === 4), await p.evaluate(() => Sis.ST.capitulo));
+  comprobar('El diario conserva las notas del capítulo', await p.evaluate(() => ['c3_archivo', 'c3_estela', 'c3_recuerdo', 'c3_tsuru'].every(id => Sis.ST.inicio.notas.some(n => n.id === id))));
+  comprobar('Sin errores de navegador', !errores.length, errores);
+} catch (e) {
+  errores.push(e.stack || e.message);
+  try { await foto('error'); console.log(await p.evaluate(() => ({ cap: Sis.ST.capitulo, mis: Sis.ST.mis.c3_duna, dlg: UI.dlg && UI.dlg.lineas.map(l => l.id), cin: Cin.activa && Cin.tipo, J: { x: J.x, y: J.y, z: J.z }, ofrece: (mejorInteract(J) || {}).txt, reto: Sis.RETO && Sis.RETO.duna }))); } catch {}
+}
+console.log(JSON.stringify({ archivo, correctas: pruebas.filter(x => x.pasa).length, pruebas: pruebas.length, errores, detalle: pruebas.map(x => (x.pasa ? '✓ ' : '✗ ') + x.nombre) }, null, 1));
+if (errores.length || pruebas.some(x => !x.pasa)) process.exitCode = 1;
+await nav.close(); srv.close();

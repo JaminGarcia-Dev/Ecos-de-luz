@@ -1,0 +1,13 @@
+{
+  "name": "ecos-de-luz-herramientas",
+  "private": true,
+  "type": "module",
+  "description": "Pruebas (Edge sin pantalla) y empaquetado de Ecos de Luz",
+  "dependencies": {
+    "playwright-core": "1.56.1"
+  },
+  "devDependencies": {
+    "ffmpeg-static": "^5.3.0",
+    "gltf-validator": "^2.0.0-dev.3.10"
+  }
+}
