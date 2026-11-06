@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hikari · revisión 3D</title>
+<style>*{box-sizing:border-box}body{margin:0;background:#202b35;color:#eee9dc;font:14px system-ui}canvas{display:block;width:100vw;height:100vh}aside{position:absolute;top:24px;left:24px;display:grid;gap:10px;max-width:280px}h1{font-size:24px;margin:0}label{display:flex;gap:8px;align-items:center}select,button{background:#34434f;color:#fff;border:1px solid #647482;border-radius:6px;padding:8px}small{color:#c5d3d9}footer{position:absolute;bottom:20px;left:24px}</style>
+<aside><h1>Hikari</h1><small>Modelo 3D · Ecos de Luz</small><label>Animación <select id="anim"><option value="">Pose de referencia</option></select></label><label><input type="checkbox" id="grieta"> Máscara agrietada</label><label>Llamas <select id="vidas"><option>3</option><option>2</option><option>1</option><option>0</option></select></label><button id="girar">Girar modelo</button><small>Arrastra para girar. Rueda para acercar.</small></aside><footer id="estado">Cargando modelo…</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script><script src="../../herramientas/vendor/GLTFLoader-r128.js"></script>
+<script>
+const escena=new THREE.Scene();escena.background=new THREE.Color(0x202b35);
+const cam=new THREE.PerspectiveCamera(32,innerWidth/innerHeight,.01,30),render=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
+render.setSize(innerWidth,innerHeight);render.setPixelRatio(Math.min(devicePixelRatio,2));render.outputEncoding=THREE.sRGBEncoding;render.toneMapping=THREE.ACESFilmicToneMapping;render.toneMappingExposure=1;document.body.appendChild(render.domElement);
+escena.add(new THREE.HemisphereLight(0xe0f3ff,0x495461,.65));for(const [x,y,z,c,i]of [[2,4,3,0xffe5bd,1.3],[-3,2,-2,0x8de5ff,1]]){const l=new THREE.DirectionalLight(c,i);l.position.set(x,y,z);escena.add(l);}
+const suelo=new THREE.Mesh(new THREE.CircleGeometry(2,80),new THREE.MeshStandardMaterial({color:new THREE.Color(0x273540).convertSRGBToLinear(),roughness:1}));suelo.rotation.x=-Math.PI/2;suelo.position.y=-.003;escena.add(suelo);
+let modelo,mixer,clips=[],accion,angulo=0,altura=.76,distancia=2.8,auto=false,ultimo=performance.now();
+const vista=a=>{angulo=a;cam.position.set(Math.sin(a)*distancia,altura,Math.cos(a)*distancia);cam.lookAt(0,.66,0);render.render(escena,cam);};
+new THREE.GLTFLoader().load('hikari.glb',g=>{modelo=g.scene;escena.add(modelo);clips=g.animations;mixer=new THREE.AnimationMixer(modelo);for(const c of clips){const o=document.createElement('option');o.value=c.name;o.textContent=c.name;anim.appendChild(o);}estado.textContent='1 unidad = 1 m · arrastra para explorar';hikariVisor.listo=true;vista(0);},undefined,e=>estado.textContent='No se pudo cargar: '+e.message);
+const pose=(nombre,t=0)=>{anim.value=nombre||'';mixer.stopAllAction();if(nombre){const c=THREE.AnimationClip.findByName(clips,nombre);accion=mixer.clipAction(c).reset();accion.setLoop(['Saltar','Aterrizar','Despegar'].includes(nombre)?THREE.LoopOnce:THREE.LoopRepeat,Infinity);accion.clampWhenFinished=true;accion.play();mixer.setTime(t);}else mixer.update(0);};
+anim.onchange=()=>pose(anim.value);
+grieta.onchange=()=>{modelo.getObjectByName('mascara_agrietada').scale.setScalar(grieta.checked?1:.0001);};
+vidas.onchange=()=>{for(let i=1;i<=3;i++)modelo.getObjectByName('Llama_'+i).visible=i<=+vidas.value;};girar.onclick=()=>auto=!auto;
+let drag=false,px=0;render.domElement.onpointerdown=e=>{drag=true;px=e.clientX;render.domElement.setPointerCapture(e.pointerId);};render.domElement.onpointerup=()=>drag=false;render.domElement.onpointermove=e=>{if(drag){angulo-=(e.clientX-px)*.01;px=e.clientX;vista(angulo);}};render.domElement.onwheel=e=>{distancia=THREE.MathUtils.clamp(distancia+e.deltaY*.002,1.5,5);vista(angulo);};
+onresize=()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();render.setSize(innerWidth,innerHeight);vista(angulo);};
+window.hikariVisor={listo:false,vista,pose,verificar:()=>clips.map(c=>{
+  mixer.stopAllAction();const a=mixer.clipAction(c).reset().setLoop(THREE.LoopOnce,1).play();a.clampWhenFinished=true;
+  let valido=true,maximo=0;const v=new THREE.Vector3();
+  for(let i=0;i<61;i++){
+    mixer.setTime(c.duration*i/60);modelo.updateMatrixWorld(true);
+    modelo.traverse(o=>{
+      if(!o.matrixWorld.elements.every(Number.isFinite))valido=false;
+      if(o.isSkinnedMesh){o.skeleton.update();const p=o.geometry.attributes.position;
+        for(let j=0;j<p.count;j+=Math.max(1,Math.floor(p.count/80))){v.fromBufferAttribute(p,j);o.boneTransform(j,v);if(!v.toArray().every(Number.isFinite))valido=false;maximo=Math.max(maximo,Math.abs(v.x),Math.abs(v.y),Math.abs(v.z));}
+      }
+    });
+  }
+  a.stop();return{nombre:c.name,duracion:c.duration,valido:valido&&maximo<3,extensionMaxima:+maximo.toFixed(3)};
+})};
+function cuadro(t){const dt=Math.min((t-ultimo)/1000,.05);ultimo=t;if(mixer)mixer.update(dt);if(auto)angulo+=dt*.3;vista(angulo);requestAnimationFrame(cuadro);}requestAnimationFrame(cuadro);
+</script></html>

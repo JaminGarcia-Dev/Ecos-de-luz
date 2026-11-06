@@ -1,0 +1,56 @@
+[
+  {
+    "nombre": "Reposo",
+    "duracion": 4.833219528198242,
+    "valido": true,
+    "extensionMaxima": 2.59
+  },
+  {
+    "nombre": "Caminar",
+    "duracion": 1.9332877397537231,
+    "valido": true,
+    "extensionMaxima": 2.611
+  },
+  {
+    "nombre": "Giro",
+    "duracion": 1.5,
+    "valido": true,
+    "extensionMaxima": 2.572
+  },
+  {
+    "nombre": "Preparar_ataque",
+    "duracion": 0.800000011920929,
+    "valido": true,
+    "extensionMaxima": 2.901
+  },
+  {
+    "nombre": "Corte",
+    "duracion": 0.4000000059604645,
+    "valido": true,
+    "extensionMaxima": 2.894
+  },
+  {
+    "nombre": "Recuperacion",
+    "duracion": 1,
+    "valido": true,
+    "extensionMaxima": 2.616
+  },
+  {
+    "nombre": "Recibir_dano",
+    "duracion": 0.699999988079071,
+    "valido": true,
+    "extensionMaxima": 2.58
+  },
+  {
+    "nombre": "Abrir_capa",
+    "duracion": 2,
+    "valido": true,
+    "extensionMaxima": 2.593
+  },
+  {
+    "nombre": "Entregar_luz",
+    "duracion": 3,
+    "valido": true,
+    "extensionMaxima": 2.115
+  }
+]

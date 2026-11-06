@@ -1,0 +1,22 @@
+{
+  "prologo": {
+    "terminado": true,
+    "segundosSimulados": 76.3,
+    "camaraValida": true
+  },
+  "combate": {
+    "fases": [
+      "entrada",
+      "acechar",
+      "aviso",
+      "corte",
+      "tambaleo",
+      "recupera"
+    ],
+    "parada": true,
+    "anticipacion": 0.62,
+    "anticipacionCombo": 0.42,
+    "corte": 0.25,
+    "golpes": 9
+  }
+}

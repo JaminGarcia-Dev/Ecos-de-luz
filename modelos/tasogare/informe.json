@@ -1,0 +1,128 @@
+{
+  "variante": "normal",
+  "alturaCabeza": 2.4,
+  "alturaCapucha": 2.58,
+  "triangulos": 19964,
+  "huesos": 54,
+  "atlas": [
+    1024,
+    1024
+  ],
+  "ojoRojo": "izquierdo (+X)",
+  "animaciones": [
+    {
+      "nombre": "Reposo",
+      "duracion": 4.83321946706122,
+      "pistas": 83
+    },
+    {
+      "nombre": "Caminar",
+      "duracion": 1.933287786824488,
+      "pistas": 83
+    },
+    {
+      "nombre": "Giro",
+      "duracion": 1.5,
+      "pistas": 83
+    },
+    {
+      "nombre": "Preparar_ataque",
+      "duracion": 0.8,
+      "pistas": 83
+    },
+    {
+      "nombre": "Corte",
+      "duracion": 0.4,
+      "pistas": 83
+    },
+    {
+      "nombre": "Recuperacion",
+      "duracion": 1,
+      "pistas": 83
+    },
+    {
+      "nombre": "Recibir_dano",
+      "duracion": 0.7,
+      "pistas": 83
+    },
+    {
+      "nombre": "Abrir_capa",
+      "duracion": 2,
+      "pistas": 83
+    },
+    {
+      "nombre": "Entregar_luz",
+      "duracion": 3,
+      "pistas": 83
+    }
+  ],
+  "piezas": [
+    {
+      "nombre": "Grieta_izquierda",
+      "triangulos": 320
+    },
+    {
+      "nombre": "Ojo_derecho_oscuro",
+      "triangulos": 84
+    },
+    {
+      "nombre": "Cuenca_izquierda",
+      "triangulos": 84
+    },
+    {
+      "nombre": "Ojo_izquierdo_rojo",
+      "triangulos": 84
+    },
+    {
+      "nombre": "Luz_entregada",
+      "triangulos": 168
+    },
+    {
+      "nombre": "Acero_fracturado",
+      "triangulos": 920
+    },
+    {
+      "nombre": "Filo_rojo",
+      "triangulos": 416
+    },
+    {
+      "nombre": "Borla_espada",
+      "triangulos": 256
+    },
+    {
+      "nombre": "Cuerpo_vestido",
+      "triangulos": 6680
+    },
+    {
+      "nombre": "Armadura",
+      "triangulos": 4912
+    },
+    {
+      "nombre": "Cordones_y_ornamentos",
+      "triangulos": 1192
+    },
+    {
+      "nombre": "Capucha",
+      "triangulos": 2616
+    },
+    {
+      "nombre": "Mascara",
+      "triangulos": 1208
+    },
+    {
+      "nombre": "Ornamento_mascara",
+      "triangulos": 300
+    },
+    {
+      "nombre": "Capa_desgarrada",
+      "triangulos": 724
+    }
+  ],
+  "materiales": 10,
+  "bytes": 2091300,
+  "validacion": {
+    "errores": 0,
+    "avisos": 0
+  },
+  "errores": []
+}

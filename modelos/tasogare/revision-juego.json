@@ -1,0 +1,74 @@
+{
+  "estados": [
+    {
+      "nombre": "reposo",
+      "valido": true,
+      "cpuMs": 0.42
+    },
+    {
+      "nombre": "guardia",
+      "valido": true,
+      "cpuMs": 0.272
+    },
+    {
+      "nombre": "alzar",
+      "valido": true,
+      "cpuMs": 0.292
+    },
+    {
+      "nombre": "corte",
+      "valido": true,
+      "cpuMs": 0.274
+    },
+    {
+      "nombre": "empuñar",
+      "valido": true,
+      "cpuMs": 0.244
+    },
+    {
+      "nombre": "mirarAtras",
+      "valido": true,
+      "cpuMs": 0.247
+    },
+    {
+      "nombre": "hablar",
+      "valido": true,
+      "cpuMs": 0.267
+    },
+    {
+      "nombre": "rodillas",
+      "valido": true,
+      "cpuMs": 0.364
+    },
+    {
+      "nombre": "sentado",
+      "valido": true,
+      "cpuMs": 0.243
+    },
+    {
+      "nombre": "sentadoMira",
+      "valido": true,
+      "cpuMs": 0.321
+    },
+    {
+      "nombre": "recibir",
+      "valido": true,
+      "cpuMs": 0.269
+    },
+    {
+      "nombre": "entregar",
+      "valido": true,
+      "cpuMs": 0.244
+    }
+  ],
+  "fracturaConstante": true,
+  "puntaOcultaEnPrologo": true,
+  "ojoIzquierdo": true,
+  "canales": {
+    "ojo": 0,
+    "filo": 1.3,
+    "brasa": 0.4,
+    "brasas": 0,
+    "oscuridad": 0.5
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "versionBlender": "4.5.9 LTS",
+  "archivo": "tasogare.blend",
+  "reabierto": true,
+  "mallas": 16,
+  "armaduras": [
+    {
+      "nombre": "Armature",
+      "huesos": 54
+    }
+  ],
+  "acciones": [
+    "Abrir_capa",
+    "Caminar",
+    "Corte",
+    "Entregar_luz",
+    "Giro",
+    "Preparar_ataque",
+    "Recibir_dano",
+    "Recuperacion",
+    "Reposo"
+  ],
+  "imagenes": [
+    {
+      "nombre": "Image_0",
+      "tamano": [
+        1024,
+        1024
+      ],
+      "empaquetada": true
+    },
+    {
+      "nombre": "referencia-ocho-vistas.png",
+      "tamano": [
+        1536,
+        1024
+      ],
+      "empaquetada": true
+    }
+  ],
+  "unidad": "METRIC"
+}

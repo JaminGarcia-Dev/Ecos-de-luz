@@ -1,0 +1,50 @@
+[
+  {
+    "nombre": "Reposo",
+    "duracion": 4,
+    "valido": true,
+    "extensionMaxima": 1.302
+  },
+  {
+    "nombre": "Caminar",
+    "duracion": 1.7490909099578857,
+    "valido": true,
+    "extensionMaxima": 1.301
+  },
+  {
+    "nombre": "Correr",
+    "duracion": 0.7828571200370789,
+    "valido": true,
+    "extensionMaxima": 1.308
+  },
+  {
+    "nombre": "Saltar",
+    "duracion": 0.800000011920929,
+    "valido": true,
+    "extensionMaxima": 1.324
+  },
+  {
+    "nombre": "Caer",
+    "duracion": 1,
+    "valido": true,
+    "extensionMaxima": 1.304
+  },
+  {
+    "nombre": "Aterrizar",
+    "duracion": 0.800000011920929,
+    "valido": true,
+    "extensionMaxima": 1.295
+  },
+  {
+    "nombre": "Despegar",
+    "duracion": 1,
+    "valido": true,
+    "extensionMaxima": 1.33
+  },
+  {
+    "nombre": "Planear",
+    "duracion": 2,
+    "valido": true,
+    "extensionMaxima": 1.219
+  }
+]

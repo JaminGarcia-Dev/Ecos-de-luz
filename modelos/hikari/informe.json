@@ -1,0 +1,114 @@
+{
+  "triangulos": 14628,
+  "triangulosVisibles": 14628,
+  "huesos": 51,
+  "materiales": 9,
+  "animaciones": [
+    {
+      "nombre": "Reposo",
+      "duracion": 4,
+      "pistas": 54
+    },
+    {
+      "nombre": "Caminar",
+      "duracion": 1.7490909090909088,
+      "pistas": 54
+    },
+    {
+      "nombre": "Correr",
+      "duracion": 0.7828571428571429,
+      "pistas": 54
+    },
+    {
+      "nombre": "Saltar",
+      "duracion": 0.8,
+      "pistas": 54
+    },
+    {
+      "nombre": "Caer",
+      "duracion": 1,
+      "pistas": 54
+    },
+    {
+      "nombre": "Aterrizar",
+      "duracion": 0.8,
+      "pistas": 54
+    },
+    {
+      "nombre": "Despegar",
+      "duracion": 1,
+      "pistas": 54
+    },
+    {
+      "nombre": "Planear",
+      "duracion": 2,
+      "pistas": 54
+    }
+  ],
+  "atlas": [
+    1024,
+    1024
+  ],
+  "alturaSinPunta": 1.15,
+  "alturaConCapucha": 1.31,
+  "piezas": [
+    {
+      "nombre": "Grieta",
+      "triangulos": 108
+    },
+    {
+      "nombre": "Llama_3",
+      "triangulos": 64
+    },
+    {
+      "nombre": "Llama_1",
+      "triangulos": 64
+    },
+    {
+      "nombre": "Llama_2",
+      "triangulos": 64
+    },
+    {
+      "nombre": "Ala_I",
+      "triangulos": 14
+    },
+    {
+      "nombre": "Ala_D",
+      "triangulos": 14
+    },
+    {
+      "nombre": "cuerpo_y_vestimenta",
+      "triangulos": 10064
+    },
+    {
+      "nombre": "capucha_marfil",
+      "triangulos": 2168
+    },
+    {
+      "nombre": "mascara_marfil",
+      "triangulos": 896
+    },
+    {
+      "nombre": "ojos_turquesa",
+      "triangulos": 52
+    },
+    {
+      "nombre": "Capa",
+      "triangulos": 960
+    },
+    {
+      "nombre": "Cinta_D",
+      "triangulos": 80
+    },
+    {
+      "nombre": "Cinta_I",
+      "triangulos": 80
+    }
+  ],
+  "bytes": 1322232,
+  "validacion": {
+    "errores": 0,
+    "avisos": 0
+  },
+  "erroresJuego": []
+}
