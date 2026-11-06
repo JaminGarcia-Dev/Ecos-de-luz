@@ -19,3 +19,5 @@ Claude dirige el proyecto y escribe el código. Tú trabajas por encargos que ll
 7. Estilo: español neutro, frases cortas, una idea por frase. Nada de sangre ni heridas; las personas se deshacen en luz. En la interfaz no van caracteres japoneses.
 8. Un texto que nombra un control no escribe la tecla: usa la acción entre llaves, por ejemplo `{interactuar}`.
 9. Termina cada entrega con: archivos tocados, decisiones tomadas y preguntas abiertas.
+10. **Git:** cada encargo llega dentro del worktree de una rama (`ecos-de-luz-ramas/<rama>`). Trabaja solo ahí: sin commits, sin cambiar de rama y sin tocar la carpeta `ecos-de-luz/` (allí juega el usuario con Live Server). Claude revisa tu diff y lo confirma a nombre del usuario.
+11. Si el encargo incluye código: `node --check` de cada .js tocado y las pruebas de `herramientas/` que nombre el encargo, con las capturas fuera del proyecto (en `%TEMP%`).

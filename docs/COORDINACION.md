@@ -14,6 +14,25 @@
 
 El proyecto está en git ([JaminGarcia-Dev/Ecos-de-luz](https://github.com/JaminGarcia-Dev/Ecos-de-luz); ramas en el README). Antes de que ChatGPT escriba en un archivo existente, el árbol de trabajo debe estar confirmado, para revisar su cambio con `git diff`.
 
+## Trabajo en ramas (desde el 5/11/2026)
+
+Cada rama tiene su worktree en `../ecos-de-luz-ramas/`; Codex y Claude trabajan en paralelo, en ramas o archivos distintos. Codex no confirma: el agente `revisor-entregas` revisa su diff, el `probador` lo prueba y Claude lo confirma y lo fusiona a `develop`.
+
+**Valoración del usuario (5/11):** Hikari y Tasogare, aceptables; ritmo, bien por ahora; **audio, no** (tampoco la muestra de voz de Tsuru); pruebas con personas, pendientes.
+
+| Rama | Encargo | Quién | Estado |
+|---|---|---|---|
+| `fase/06b-guardianes` | **A1** Auditoría de cierre: cada pendiente de la fase 6B y cada caso de las secciones 5.2–5.3 de [la entrega de los guardianes](entregas_chatgpt/2026-11-03_golems_guardianes.md), con estado real en el código (`archivo:línea`) | ChatGPT (solo lectura) | ☐ |
+| `fase/06b-guardianes` | **A2** Cuerpo y combate: solidez y casos límite que falten (11), guardado durante combate y liberación, gólem vencible con cualquier estilo (11, 70, 21) | Claude | ☐ tras A1 |
+| `fase/06b-guardianes` | **A3** Arenas y arte: pistas visuales de oficio, recogidas junto a la ruta, bordes que se lean traspasables, capa del Cerezo (31, 22, 34) | ChatGPT (código acotado) | ☐ tras A1 |
+| `fase/06b-guardianes` | **A4** Diario: esquema de Arena y fichas de los guardianes liberados (textos de ChatGPT en 26; interfaz de Claude en 08/51) | ChatGPT + Claude | ☐ tras A1 |
+| `fase/06b-guardianes` | **A5** Cierre: batería completa, capturas de cada arena y liberación, PLAN_JUEGO y documentación al día; fusión a `develop` | Claude | ☐ |
+| `fase/07-catalogo` | **B1** Auditoría de la fase 7: qué existe de odachi, katana veloz, cuatro escuelas, cinco variantes y Sombra alada, y qué falta para el «Listo» | ChatGPT (solo lectura) | ☐ |
+| `fase/07-catalogo` | **B2** Katana veloz y lo que falte de las variantes, sin tocar 11-jefes (lo usa la 6B) | ChatGPT (código acotado) | ☐ tras B1 |
+| `fase/07-catalogo` | **B3** Tasogare, ataduras de Lumi y Luna Roja con el estilo único; 60 FPS con 6 enemigos y 12 proyectiles | Claude | ☐ tras fusionar la 6B |
+| `mejora/audio` | **C1** Diagnóstico y propuesta de audio con opciones para escuchar, cuando el usuario diga qué le disgusta | ChatGPT | ⏸ usuario |
+| `docs/tablero` | **D1** Limpiar casillas obsoletas de este tablero (bloques 0–5) y anotar lo hecho de la fase 7 en PLAN_JUEGO | ChatGPT | ☐ |
+
 ## Diagnóstico de partida (2 de noviembre de 2026)
 
 - **Base:** `claude-cowork/ecos-de-luz.zip` (22/10), con 45 módulos y las fases 1–22.
